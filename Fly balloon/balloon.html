@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Balloon</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			background: #0e0d0d;
+		}
+
+		.balloon {
+           width: 170px;
+           height: 170px;
+           border-radius: 170px 170px 40px 170px;
+           background: #faf9f9;
+           position: absolute;
+           left: 0;
+           bottom: 0;
+           transform: rotate(45deg);
+           box-shadow: inset -8px -8px 80px -8px pink,48px 48px 24px rgba(220,150,150,0.2); 
+		}
+
+		.balloon:after {
+           content: "";
+           display: block;
+           position: absolute;
+           right: 0;
+           bottom: 0;
+           width: 0;
+           height: 0;
+           border: 8px solid #dbbdbd;
+           border-top-color: transparent;
+           border-bottom-color: transparent;
+           border-left-color: transparent;
+           transform: rotate(45deg);
+           border-radius: 16px;
+		}
+	</style>
+</head>
+<body>
+	
+	<script>
+	var num = 10;
+	var oBody = document.querySelector('body');
+	//console.log(oBody);
+	var wW = window.innerWidth;
+	var wH = window.innerHeight;
+	var timer = null;
+	
+	init(num);
+	function init (num) {
+		for (var i = 0; i < num;i++) {
+		var randomL = Math.random()*wW;
+		    randomL = Math.min(wW - 190,randomL);
+		var balloon = document.createElement('div');
+		balloon.className = 'balloon';
+		balloon.style.left = randomL + 'px';
+		balloon.style.top = wH + 'px';
+		balloon.speed = Math.random()*7+2;
+	    oBody.appendChild(balloon);
+	    }
+	}
+	
+
+	timer = setInterval(function() {
+		var oBall = document.querySelectorAll('.balloon');
+		for (var i = 0,len = oBall.length; i < len; i++) {
+			oBall[i].style.top = oBall[i].offsetTop - oBall[i].speed + 'px';
+			oBall[i].onclick = function () {
+                  crash(this,function(xxx){
+                  	clearInterval(xxx.timer);
+    		        xxx.parentNode.removeChild(xxx);
+                  });
+                  init(1);
+			}
+		}
+
+	},30);
+
+
+    function crash (ele,cb) {
+    	ele.timeouter = setTimeout(function(){
+    		cb && cb(ele);
+    	},1000)
+    	ele.timer = setInterval(function(){
+            ele.speed++;
+    		ele.style.top = ele.offsetTop - ele.speed + 'px';
+    		ele.style.width = ele.offsetWidth - 10 + 'px';
+    		ele.style.height = ele.offsetHeight - 10 + 'px';
+
+    	},30)
+    }
+	
+
+	</script>
+</body>
+</html>

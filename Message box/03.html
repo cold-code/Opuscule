@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Get input value</title>
+	<style>
+	      * {
+	      	margin: 0;
+	      	padding: 0;
+	      }
+
+	      body {
+	      	background: #f5f5f5;
+	      }
+
+	      main {
+	      	width: 30em;
+	      	margin: 5em auto;
+
+	      }
+
+          #top {
+          	width: 25em;
+          	padding: 1em;
+          	border-radius: 5px 5px 5px 5px;
+          	background: #ebebeb;
+          	height: 7em;
+          	position: relative;
+          }
+
+		  #text {
+		  	position: absolute;
+		  	top: 1em;
+		  	left: 1em;
+		  	width: 31em;
+		  	height: 6em;
+		  	border-radius: 5px 5px 5px 5px;
+		  	background: #f5f5f5;
+		  	border: 1px solid #f5f5f5;
+		  	resize: none;
+		  }
+
+		  #imgBox img{
+		  	display: none;
+		  	position: absolute;
+          	bottom: .5em;
+          	left: 1em;
+          	width: 2em;
+          	height: 2em;
+          	padding: 0.1em;
+          	background: #fff;
+          	border-radius: 2px 2px 2px 2px;
+            cursor: pointer;
+		  }
+
+          #imgBox .logo1 {
+          	
+            display: block;
+          }
+
+          #imgBox .logo2 {
+          	display: none;
+          }
+
+          #bottom .logo2 {
+          	display: none;
+          }
+
+
+          #submit {
+          	position: absolute;
+          	bottom: .5em;
+          	right: 1em;
+            width: 5em;
+            height: 2.5em;
+            background: #f60;
+            border: 1px solid #f60;
+            border-radius: 6px 6px 6px 6px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+          }
+
+          #bottom {
+          	margin-top: 2em;
+		    width: 27em; 
+          }
+
+          #bottom ul li {
+          	height: 5em;
+          	border-bottom: 1px solid #ebebeb;
+          	list-style: none;
+          	position: relative;
+          }
+          
+          /*清除li内浮动
+          #bottom ul li:after {
+          	content: "";
+          	display: block;
+          	clear: both;
+          }
+          */
+
+          #bottom ul  li img {
+          	position: absolute;
+          	top: 0;
+          	left: 0;
+          	margin-top: 1em;
+          	margin-right: 2em;
+          }
+
+          #bottom ul  li span {
+          position: absolute;
+          top: 0;
+          left: 5em;
+          padding-top: 1em; 
+          }
+         
+	</style>
+</head>
+<body>
+	<main>
+	    <div id="top">
+			<textarea  id="text" placeholder="请输入你的留言" ></textarea>
+              <div id="imgBox">
+	            <img class="logo1" src="logo1.png">
+	            <img class="logo2" src="logo2.png">
+	          </div>
+			<input type="button" id="submit" value="发表">
+	    </div>
+	    <div id="bottom">
+		    <ul>
+
+		    </ul>
+	    </div>
+	</main>
+	<script>
+
+		var oBtn = document.getElementById('submit');
+		var oImgBox = document.getElementById('imgBox');
+		var aImg1 = document.getElementsByClassName('logo1')[0];
+		var aImg2 = document.getElementsByClassName('logo2')[0];
+		var oText = document.getElementById('text');
+		var src = 'logo1.png';
+		var oBox = document.getElementById('bottom');
+		var oUl = document.querySelector('ul');	
+		//实现会员头像切换
+			aImg1.onclick = function () {
+				this.style.display = 'none';
+				aImg2.style.display = 'block';
+                src = 'logo2.png';
+			};
+
+			aImg2.onclick = function () {
+				this.style.display = 'none';
+				aImg1.style.display = 'block';
+				src = 'logo1.png';
+			};
+		
+
+		//生成留言列表
+		
+		
+		oBtn.onclick = function () {
+		var oValue = oText.value;
+		oUl.innerHTML += '<li><img src="'+ src +'"/><span>'+ oValue +'</span></li>';
+		
+		}
+
+	</script>
+</body>
+</html>

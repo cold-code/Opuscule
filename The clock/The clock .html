@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片时钟</title>
+	<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+
+			li {
+				list-style: none;
+			}
+
+			#box {
+				width: 320px;
+				height: 61px;
+				margin: 200px auto;
+			}
+
+			#box img {
+				display: inline-block;
+			}
+	</style>
+</head>
+<body>
+	<div id="box">
+			<img src="images/1.png" alt="小时">
+			<img src="images/1.png" alt="小时">
+			<img src="images/d.png" alt="点">
+			<img src="images/1.png" alt="分钟">
+			<img src="images/1.png" alt="分钟">
+			<img src="images/d.png" alt="点">
+			<img src="images/1.png" alt="秒钟">
+			<img src="images/1.png" alt="秒钟">
+	</div>
+	<script>
+			var aImg = document.getElementsByTagName('img'),
+			    length = aImg.length;
+			    
+
+			function timer(){
+				var imgclock = new Date(),
+				    hour = imgclock.getHours(),
+				    minu = imgclock.getMinutes(),
+				    sec = imgclock.getSeconds(),
+				    arrHour = String(ten(hour)).split(''),
+				    arrMinu = String(ten(minu)).split(''),
+				    arrSec = String(ten(sec)).split('');
+				    
+					aImg[0].src = 'images/'+arrHour[0]+'.png';
+					aImg[1].src = 'images/'+arrHour[1]+'.png';
+					aImg[3].src = 'images/'+arrMinu[0]+'.png';
+					aImg[4].src = 'images/'+arrMinu[1]+'.png';
+					aImg[6].src = 'images/'+arrSec[0]+'.png';
+					aImg[7].src = 'images/'+arrSec[1]+'.png';
+			}   
+			
+			setInterval(timer,1000);
+
+			function ten(num) {
+				return num*1<10?'0' + num:num;
+			}
+			
+	</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>弹动小球</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+        
+        body {
+        	width: 100%;
+        	height: 100%;
+        	background: rgb(255,0,255);
+        }
+
+		.ball {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100px;
+			height: 100px;
+			background: rgb(0,0,0);
+			border-radius: 100%;
+		}
+	</style>
+</head>
+<body>
+	
+	<script>
+
+	play (10);
+        // var color = document.body.style.backgroundColor;
+        // alert(color);
+        // 为何获取不到body背景颜色
+	function play (num) {
+		
+
+		//生成num个小球
+		for (i = 0;i < num;i++) {
+			var oBall = document.createElement('div');
+			oBall.className = 'ball';
+			oBall.style.backgroundColor = randomColor();
+			oBall.topSpeed = ((2 + i)*2)/3;//纵向变化速度
+			oBall.leftSpeed = ((1 + i)*3)/2;//横向变化速度
+			document.body.appendChild(oBall);
+		}
+		var aBall = document.querySelectorAll('.ball'),
+	    maxWidth = document.documentElement.clientWidth - aBall[0].clientWidth,//最大宽
+	    maxHeight = document.documentElement.clientHeight - aBall[0].clientHeight;//最大高
+
+	    //窗口变化同时改变最大宽、高
+	    window.resetsize = function () {
+	    	maxWidth = document.documentElement.clientWidth - aBall[0].clientWidth;
+	    	maxHeight = document.documentElement.clientHeight - aBall[0].clientHeight;
+	    };
+	    
+	    run ();
+		    function run () {
+		    	for (var i = 0;i < num;i++) {
+		    		var Ball = aBall[i];
+		    		    
+			    		nowLeft = Ball.offsetLeft,
+			    		nowTop = Ball.offsetTop,
+			    		cleft = nowLeft + Ball.leftSpeed,
+			    		ctop = nowTop + Ball.topSpeed;
+                        
+		    		if (cleft >= maxWidth || cleft <= 0) {
+		    			cleft = Math.min(cleft,maxWidth);
+		    			cleft = Math.max(cleft,0);
+		    			Ball.leftSpeed = -Ball.leftSpeed;
+		    			document.body.style.backgroundColor = Ball.style.backgroundColor = randomColor() ;
+
+		    		}
+
+		    		if (ctop >= maxHeight || ctop <= 0) {
+		    			ctop = Math.min(ctop,maxHeight);
+		    			ctop = Math.max(ctop,0);
+		    			Ball.topSpeed = -Ball.topSpeed;
+		    			document.body.style.backgroundColor = Ball.style.backgroundColor = randomColor();
+		    		}
+		    		Ball.style.left = cleft + 'px';
+		    		Ball.style.top = ctop + 'px';
+
+		    	}
+		    	
+		    		requestAnimationFrame(run);
+	    }
+
+	    function randomColor () {
+	    	var r = Math.floor(Math.random()*256),
+    		    g = Math.floor(Math.random()*256),
+	    		b = Math.floor(Math.random()*256);
+	    	return 'rgb('+ r +','+ g +','+ b +')';
+	    }
+	}
+	
+	</script>
+</body>
+</html>

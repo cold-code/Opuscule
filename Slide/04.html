@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>幻灯片</title>
+	<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	main {
+        width: 25em;
+        height: 15em;
+		margin: 10em auto;
+	}
+
+	button {
+		background: #000;
+		color: #fff;
+		border: 1px solid #000;
+		cursor: pointer; 
+	}
+
+	.focus {
+		background: #f30;
+		border: 1px solid #f30;
+	}
+
+	#box {
+		height: 100%;
+		background: url(images/1.jpg) no-repeat;
+		background-size: 100% 100%;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.trp {
+		height: 1.3em;
+		line-height: 1.3em;
+		background: rgba(0,0,0,0.3);
+		color: #fff;
+	}
+
+	#box #top {
+		width: 100%;
+		text-align: center;
+		position: absolute;
+		top: 0;
+		left: 0;
+		
+	}
+
+	#box #bottom {
+		width: 100%;
+		text-align: center;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+	}	
+
+	#box #left {
+		width: 4em;
+		position: absolute;
+		left: -3em;
+		top: 50%; 
+		border-radius: 0em 1.3em 1.3em 0em;
+		cursor: pointer;
+	}
+
+	#box #left:hover {
+		text-align: center;
+		border-radius: 0;
+		-webkit-transform: translateX(3em);
+		-moz-transform: translateX(3em);
+		-o-transform: translateX(3em);
+		transform: translateX(3em);
+	}
+
+	#box #right {
+		width: 4em;
+		position: absolute;
+		text-align: right;
+		right: -3em;
+		top: 50%;
+		border-radius: 1.3em 0em 0em 1.3em;
+		cursor: pointer;
+	}
+
+	#box #right:hover {
+		text-align: center;
+		border-radius: 0;
+		-webkit-transform: translateX(-3em);
+		-moz-transform: translateX(-3em);
+		-o-transform: translateX(-3em);
+		transform: translateX(-3em);
+	}
+
+    
+	</style>
+</head>
+<body>
+	 <main>
+		 <button id="btn1">循环切换</button>
+		 <button id="btn2">单边切换</button>
+		 <div id="box">
+			<b class="trp" id="top">1/6</b>
+			<b class="trp" id="left">上一张</b>
+			<b class="trp" id="right">下一张</b>
+			<b class="trp" id="bottom">第一张图片</b>
+		 </div>
+	 </main>
+	<script>
+	    
+	    var oBox = document.getElementById('box');
+	    var oBtn1 = document.getElementById('btn1');
+	    var oBtn2 = document.getElementById('btn2');
+        var trLeft = document.getElementById('left');
+        var trRight = document.getElementById('right');
+        var oTop = document.getElementById('top');
+        var oBottom = document.getElementById('bottom');
+        var arr = ['一','二','三','四','五','六'];   
+        var num = 1;
+        var checked = true;
+       
+       //循环切换
+       oBtn1.onclick = function () {
+	    	this.className = 'focus';
+	    	oBtn2.className = ' ';
+	    	//下一张
+            trRight.onclick = function () {
+	            if (num < 6 ) {
+		            num++;
+		        	oTop.innerHTML = num +'/6';
+		            oBox.style.background = 'url(images/'+num+'.jpg) no-repeat';
+		            oBox.style.backgroundSize = '100% 100%';
+		            oBottom.innerHTML = '第'+arr[num-1]+'张图片';
+		        }else if (num = 6) {
+		              num = 0;
+		              num++;
+		        	oTop.innerHTML = num +'/6';
+		            oBox.style.background = 'url(images/'+num+'.jpg) no-repeat';
+		            oBox.style.backgroundSize = '100% 100%';
+		            oBottom.innerHTML = '第'+arr[num-1]+'张图片';
+		           }
+		        };
+
+		        //上一张
+            trLeft.onclick = function () {
+		        if (num > 1 ) {
+		            num--;
+		            oTop.innerHTML = num + '/6';
+		            oBox.style.background = 'url(images/'+num+'.jpg) no-repeat';
+			        oBox.style.backgroundSize = '100% 100%'; 
+			        oBottom.innerHTML = '第'+arr[num-1]+'张图片';         
+		        }else if (num = 1) {
+		        	num = 7;
+		        	num--;
+		            oTop.innerHTML = num + '/6';
+		            oBox.style.background = 'url(images/'+num+'.jpg) no-repeat';
+			        oBox.style.backgroundSize = '100% 100%'; 
+			        oBottom.innerHTML = '第'+arr[num-1]+'张图片';
+		        }
+	        };
+	    }
+        
+        //单边切换
+        oBtn2.onclick = function () {
+        	this.className = 'focus';
+        	oBtn1.className = ' ';
+        	//下一张
+            trRight.onclick = function () {
+	            if (num < 6 ) {
+		            num++;
+		        	oTop.innerHTML = num +'/6';
+		            oBox.style.background = 'url(images/'+num+'.jpg) no-repeat';
+		            oBox.style.backgroundSize = '100% 100%';
+		            oBottom.innerHTML = '第'+arr[num-1]+'张图片';
+		        }else if (num = 6) {
+		            alert("已经最后啦！");
+		        }
+		    };
+		        
+	        //上一张
+	        trLeft.onclick = function () {
+		        if (num > 1 ) {
+		            num--;
+		            oTop.innerHTML = num + '/6';
+		            oBox.style.background = 'url(images/'+num+'.jpg) no-repeat';
+			        oBox.style.backgroundSize = '100% 100%'; 
+			        oBottom.innerHTML = '第'+arr[num-1]+'张图片';         
+		        }else if (num = 1) {
+		            alert("已经第一张啦！");
+		        }
+	        };
+	    }
+
+	    
+	</script>
+        
+</body>
+</html>

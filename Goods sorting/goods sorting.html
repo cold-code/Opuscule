@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>购物价格排序</title>
+	<style>
+
+    * {
+    	margin: 0;
+    	padding: 0;
+    }
+
+    nav {
+    	width: 930px;
+    	height: 50px;
+    	line-height: 50px;
+    	margin: 0 auto;
+    	background: #ccc; 
+    }
+
+    nav ul {
+    	width: 80%;
+    	margin: 20px auto;
+    }
+
+    nav ul li {
+    	display: inline-block;
+    	position:relative;
+    	width: 20%;
+    	margin-left: 10px;
+    	list-style: none;
+    	text-align: center;
+    	cursor: pointer;
+    }
+
+    .hide {
+    	display: none;
+    	position: absolute;
+    	top: 0;
+    	left: 0;
+    	width: 100%;
+    	background: #fff;
+    	border: 1px solid #d9d9d9;
+    }
+
+    .hide a {
+    	display: block;
+    }
+
+    nav ul li span.active {
+    	color: red;
+    }
+
+    #box {
+    	width: 930px;
+    	background: #d9d9d9;
+    	margin: 20px auto;
+    	overflow: hidden;
+    }
+
+    #box .items {
+        width: 220px;
+        margin: 5px;
+        background: #fff;
+        border: 1px dotted #d9d9d9;
+    	float: left;
+    }
+
+    #box .items img {
+    	margin: 5px;
+    }
+
+    #box .items p {
+    	line-height: 50px;
+    	margin-left: 5px;
+    	float: left;
+    }
+
+    #box .items div {
+    	width: 50px;
+    	height: 50px;
+    	line-height: 50px;
+    	margin-right: 5px;
+    	border-radius: 50px 30px 50px 30px;
+    	background: #ee2c2c;
+    	color: yellow;
+    	float: right;
+    }
+
+
+
+	</style>
+</head>
+<body>
+	<nav>
+		<ul>
+			<li>流行</li>
+			<li>热销</li>
+			<li>上新</li>
+			<li>
+				<span>价格</span>
+				<div class="hide">
+					<a>价格从高到低</a>
+					<a>价格从低到高</a>
+				</div>
+			</li>
+		</ul>
+	</nav>
+	<div id="box">
+		<div class="items">
+             <img src="01.jpg" alt="鲜花">
+             <p>漂亮的鲜花1</p>
+             <div>￥<span>100</span></div>
+		</div>
+		<div class="items">
+             <img src="02.jpg" alt="鲜花">
+             <p>漂亮的鲜花2</p>
+             <div>￥<span>105</span></div>
+		</div>
+		<div class="items">
+             <img src="03.jpg" alt="鲜花">
+             <p>漂亮的鲜花3</p>
+             <div>￥<span>225</span></div>
+		</div>
+		<div class="items">
+             <img src="04.jpg" alt="鲜花">
+             <p>漂亮的鲜花4</p>
+             <div>￥<span>175</span></div>
+		</div>
+		<div class="items"> 
+             <img src="05.jpg" alt="鲜花">
+             <p>漂亮的鲜花5</p>
+             <div>￥<span>300</span></div>
+		</div>
+		<div class="items">
+             <img src="06.jpg" alt="鲜花">
+             <p>漂亮的鲜花6</p>
+             <div>￥<span>425</span></div>
+		</div>
+		<div class="items">
+             <img src="07.jpg" alt="鲜花">
+             <p>漂亮的鲜花7</p>
+             <div>￥<span>700</span></div>
+		</div>
+		<div class="items">
+             <img src="08.jpg" alt="鲜花">
+             <p>漂亮的鲜花8</p>
+             <div>￥<span>1000</span></div>
+		</div>
+	</div>
+	
+	<script>
+    
+    (function () {
+    	var oBox = document.querySelector('#box');
+	        aLi = document.querySelectorAll('nav ul li'),
+	        oSpan = document.querySelectorAll('nav ul li span')[0],
+	        hide = document.querySelector('.hide'),
+	        aText = hide.querySelectorAll('a'),
+	        aItems = document.querySelectorAll('.items'),
+	        aPrice = document.querySelectorAll('.items div'),
+	        price = [];
+	        length = aItems.length;
+        
+        //移入li,显示hide
+    	aLi[3].onmouseenter = function () {
+    		hide.style.display = 'block';
+    	};
+    	//移出li,隐藏hide
+    	aLi[3].onmouseleave = function () {
+    		hide.style.display = 'none';
+    	};
+
+    	//点击hide,li内容改变
+	    for (var i = 0; i < 2; i ++) {
+	    	aText[i].x = i;
+	    	aText[i].onclick = function () {
+	    		hide.style.display = 'none';
+	    		oSpan.innerHTML = this.innerHTML;
+	    		oSpan.className = 'active';
+	    		sort(this.x);
+	    	};
+	    }
+
+        //存储小项目值
+	    for ( i = 0; i < length; i ++) {
+	    	price[i] = [];
+	    	price[i][0] = i + 1;
+	    	price[i][1] = i + 1;
+	    	price[i][2] = Number(aItems[i].querySelector('div span').innerHTML)
+	    }
+        
+        //排序函数
+	    function sort (index) {
+	    	price.sort(function(a,b){
+	    		return index?a[2]-b[2]:b[2]-a[2];
+	    	});
+	        oBox.innerHTML = '';
+	        for (i = 0;i < length;i ++) {
+	        	oBox.innerHTML += '<div class="items"><img src="0'+price[i][0]+'.jpg" alt="鲜花" /><p>漂亮的鲜花'+price[i][1]+'</p><div>￥<span>'+price[i][2]+'</span></div></div>';
+	        }
+		}
+    })();
+	    
+	</script>
+</body>
+</html>
