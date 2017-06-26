@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>check-replace</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		#box {
+			position: relative;
+			width: 640px;
+			height: 400px;
+			margin: 100px auto;
+			padding: 20px 50px;
+			background: #ddd;
+		}
+
+		input.check {
+			color: #33a780;
+			border: 1px solid #33a780;
+			height: 25px;
+			padding: 2px;
+		}
+
+		input.replace {
+			color: #e60;
+			border: 1px solid #e60;
+			height: 25px;
+			padding: 2px;
+		}
+
+		#checkBtn,
+		#checkNextBtn,
+		#repBtn,
+		#repAllBtn {
+			border-radius: 3px;
+			width: 80px;
+			cursor: pointer;
+		}
+
+		#txtBox {
+			width: 640px;
+			height: 350px;
+			margin-top: 20px;
+			background: #fff;
+			border: 1px solid #fff;
+			box-shadow: 0 0 2px #000;
+			font-size: 18px;
+			letter-spacing: 5px;
+			line-height: 30px;
+			text-indent: 2em;
+		}
+
+		#txtBox span {
+			color: #33a780;
+			font-size: 22px;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<input type="text" id="check" class="check">
+		<input type="button" value="查找" id="checkBtn" class="check">
+		<input type="button" value="查找下一个" id="checkNextBtn" class="check">
+		<input type="text" id="replace" class="replace">
+		<input type="button" value="替换" id="repBtn" class="replace">
+		<input type="button" value="替换全部" id="repAllBtn" class="replace">
+		<div id="txtBox">从涞源收费站出来大约驾车行驶了20分钟，一路畅通的到达目的地——白石山。在景区西门缆车中心看着一路向上的缆车，想到了来之前做了一点功课。白石山是太行八陉中飞狐陉所在，森林覆盖率80%并拥有我国唯一的大理岩峰林地貌；海拔高、坡度陡、悬崖绝壁，占齐了雄、奇、险不说，在此等险峻之境之上白石山修建了两条玻璃栈道，两条火到景区不得不“闭门谢客”的“网红”玻璃栈道。</div>
+	</div>
+	<script>
+		var check = document.getElementById('check'),
+			replace = document.getElementById('replace'),
+			checkBtn = document.getElementById('checkBtn'),
+			checkNextBtn = document.getElementById('checkNextBtn'),
+			repBtn = document.getElementById('repBtn'),
+			repAllBtn = document.getElementById('repAllBtn'),
+			Box = document.getElementById('txtBox'),
+			boxTxt = Box.innerHTML,
+			checkTxt,
+			length,
+			index,
+			start,
+			end,
+			ifOdd = false;//标记是否被替换完成
+			str = '';
+
+			checkBtn.onclick = function () {
+				if (index !== -1 || index > 0) {//若存在查找值则进行替换
+				checkTxt = check.value,
+				length = checkTxt.length,
+				index = boxTxt.indexOf(checkTxt),//找出文本框内第一个查找值
+				search(checkTxt);
+				ifOdd = true;//当利用查找替代查找下一个按钮时，同时改变为被替换的状态
+				}else if(index == -1) {//若不存在查找值弹框提醒
+					alert('查无此项');
+				}
+				
+				console.log(end);
+			};
+
+			checkNextBtn.onclick = function () {
+				index = boxTxt.indexOf(checkTxt,end);//跳过上一个，继续查找
+				ifOdd = true;//点击下一个同时改变为被替换状态
+				if (index !== -1){//若存在查找值则进行替换
+					search(checkTxt);
+				}else if (index > 0){//
+					checkTxt = check.value,
+					length = checkTxt.length,
+					index = boxTxt.indexOf(checkTxt);
+					search(checkTxt);
+				}else if (index == -1) {//若不存在查找值弹框提醒
+					alert('查无此项');
+					ifOdd = false;//若不存在查找值改为不可替换状态
+				}
+				
+			};
+
+			repBtn.onclick = function () {
+				if (replace.value == '') {//判断替换值框为空时，是否存在误操作
+					repTxt = '';
+					ifEmpty();
+				}
+				if(ifOdd) {
+				repTxt = replace.value,
+				search(repTxt);
+				}else if (index == -1) {
+					alert('无可替换项');
+				}
+				ifOdd = true;//点击下一个同时改变为被替换状态
+				boxTxt = Box.innerHTML;//保存修改后的文本值
+				
+			};
+
+			repAllBtn.onclick = function () {
+				if (replace.value == '') {//判断替换值框为空时，是否存在误操作
+					repTxt = '';
+					ifEmpty();
+					ifOdd = true;//点击下一个同时改变为被替换状态
+				}
+				if (!ifOdd && check.value != '') {//只要存在查找值，即可完成全局替换
+					var v = check.value;
+					var v2 = replace.value;
+					boxTxt = boxTxt.split(v);
+					Box.innerHTML = boxTxt.join('<span>'+ v2 +'</span>');
+				}
+			}
+			//查找值函数
+			function search(txt) {
+				start = index*1;//储存起始值位置
+				end = index*1+length;//储存起始值长度，即结束位置
+				allTxt = boxTxt.split('');
+				newWord = '<span>' + txt + '</span>';
+				allTxt.splice(start,length,newWord);
+				Box.innerHTML = allTxt.join('');
+			}
+			//判断替换值框为空时，是否存在误操作函数
+			function ifEmpty () {
+				if (confirm('当前为空字符，确定替换吗？')) {
+					ifOdd = true;
+					search(repTxt);
+				}else{
+					ifOdd = false;
+				}
+			}
+	</script>
+</body>
+</html>
