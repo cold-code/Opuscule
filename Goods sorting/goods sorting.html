@@ -202,6 +202,34 @@
 	        }
 		}
     })();
+		//按给定规则排序
+		/*(function(){
+		    var arr = [];                   //待排序元素
+		    var targetArr = [0,1,2,5,3,4];  //排序规则
+		    var outArr = [];                //目标元素
+		    $.each($('.list .ui-cell-noborder'),function(key,el){
+			el.idx = key;  //设定序号
+			arr.push(el);
+		    })
+		    //排序方法
+		    for (let i = 0; i < arr.length; i++) {
+			if(arr[i].idx === targetArr[i]){
+			    // console.log(arr[i].idx)
+			    outArr.push(arr[i]) 
+			}else{
+			    // console.log(targetArr[i])
+			    outArr.push(arr[targetArr[i]])
+			}
+		    }
+		    //清空列表
+		    $('.list').empty();
+		    //填充新元素
+		    for (let j = 0; j < outArr.length; j++) {
+			$('.list').append(outArr[j])
+		    }
+		    // console.log(arr)
+		    // console.log(outArr)
+		})()*/
 	    
 	</script>
 </body>
