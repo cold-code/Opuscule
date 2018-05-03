@@ -152,13 +152,13 @@
 	<script>
     
     (function () {
-    	var oBox = document.querySelector('#box');
-	        aLi = document.querySelectorAll('nav ul li'),
-	        oSpan = document.querySelectorAll('nav ul li span')[0],
-	        hide = document.querySelector('.hide'),
-	        aText = hide.querySelectorAll('a'),
-	        aItems = document.querySelectorAll('.items'),
-	        aPrice = document.querySelectorAll('.items div'),
+    	var oBox = document.querySelector('#box');                        //大容器
+	        aLi = document.querySelectorAll('nav ul li'),             //导航按钮
+	        oSpan = document.querySelectorAll('nav ul li span')[0],   //排序列表头
+	        hide = document.querySelector('.hide'),                   //排序按钮列表
+	        aText = hide.querySelectorAll('a'),                       //排序按钮
+	        aItems = document.querySelectorAll('.items'),             //商品卡片
+	        aPrice = document.querySelectorAll('.items div'),         //商品
 	        price = [];
 	        length = aItems.length;
         
@@ -178,6 +178,7 @@
 	    		hide.style.display = 'none';
 	    		oSpan.innerHTML = this.innerHTML;
 	    		oSpan.className = 'active';
+			//调用排序
 	    		sort(this.x);
 	    	};
 	    }
