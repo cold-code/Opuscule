@@ -7,11 +7,4 @@
 [商品排序](https://htmlpreview.github.io/?https://github.com/cold-code/Opuscule/blob/master/Goods%20sorting/goods%20sorting.html)  
 [博客留言框](https://htmlpreview.github.io/?https://github.com/cold-code/Opuscule/blob/master/Message%20box/03.html)  
 [查找和替换](https://htmlpreview.github.io/?https://github.com/cold-code/Opuscule/blob/master/search%26replace/search-replace.html)
-<script type="text/javascript">
-	$(document).ready(function() {
-	    //为超链接加上target='_blank'属性
-		$('a[href^="http"]').each(function() {
-			$(this).attr('target', '_blank');
-		});
-	});
-</script>
+<a href="https://htmlpreview.github.io/?https://github.com/cold-code/Opuscule/blob/master/Fly%20balloon/balloon.html" target="_blank">点击打气球</a>
